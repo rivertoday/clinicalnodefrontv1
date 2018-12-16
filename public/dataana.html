@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据分析</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- basic styles -->
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="css/font-awesome-ie7.min.css" />
+    <![endif]-->
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="css/datepicker.css" />
+    <link rel="stylesheet" href="css/ui.jqgrid.css" />
+    <!-- fonts -->
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="css/ace.min.css">
+    <link rel="stylesheet" href="css/ace-rtl.min.css">
+    <link rel="stylesheet" href="css/ace-skins.min.css">
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="css/ace-ie.min.css" />
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+
+    <script src="js/ace-extra.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+            /*给出一个最大宽度 适配移动端*/
+            #main{
+                max-width: 1920px;
+                height: 400px;
+                border:1px rgba(185, 185, 185, 0.49) solid
+            }
+    
+            @media screen and (max-width:780px) {
+                #main{
+                    width: 100%;
+                    height: 300px;
+                }
+            }
+        </style>
+</head>
+<body>
+<!-- 导航 -->
+<div class="navbar navbar-default" id="navbar">
+    <script type="text/javascript">
+        try {ace.settings.check('navbar','fixed')}catch (e) {}
+    </script>
+
+    <div class="navbar-container" id="navbar-container">
+        <div class="navbar-header pull-left">
+            <a href="../home" class="navbar-brand">
+                <small>
+                    <i class="icon-leaf">
+                        中医妇产科临床流调数据中心
+                    </i>
+                </small>
+            </a>
+        </div>
+    </div>
+
+    <div class="navbar-header pull-right" role="navigation">
+        <ul class="nav ace-nav">
+            <li class="light-blue">
+                <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                    <img class="nav-user-photo" src="avatars/user.jpg" alt="Jason's Photo">
+                    <span class="user-info">
+                        <small>welcome,</small>
+                        admin
+                    </span>
+
+                    <i class="icon-caret-down"></i>
+                </a>
+
+                <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+
+                    <li class="divider"></li>
+
+                    <li>
+                        <a href="../logout">
+                            <i class="icon-off"></i>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+    </script>
+
+    <div class="main-container-inner">
+            <a class="menu-toggler" id="menu-toggler" href="#">
+                    <span class="menu-text"></span>
+                </a>
+
+        <div class="sidebar" id="sidebar">
+            <script type="text/javascript">
+                try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+            </script>
+
+            <ul class="nav nav-list">
+                <li>
+                    <a href="../prj001">
+                        <i class="icon-dashboard"></i>
+                        <span class="menu-text"> 数据展示 </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../prj001/datainput">
+                        <i class="icon-text-width"></i>
+                        <span class="menu-text"> 数据采集 </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../public/dataana.html">
+                        <i class="icon-list-alt"></i>
+                        <span class="menu-text"> 数据分析 </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../public/about.html">
+                        <i class="icon-tag"></i>
+                        <span class="menu-text"> 关于 </span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-collapse" id="sidebar-collapse">
+                <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+            </div>
+
+            <script type="text/javascript">
+                try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+            </script>
+        </div>
+
+        <div class="main-content">
+
+            <div class="page-content">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+
+                     <div class="row">
+                         <div class="col-dm-6">
+                             <h3>本视图将展示相关基础数据与中医证型的统计占比关系。</h3>
+                             <p>
+                                            以证型“肝郁气滞”为例, 展示年龄段这一参数在证型中的占比：
+                                        </p>
+
+                         </div><!-- /span -->
+                     </div>
+                </div><!-- /.col -->
+
+                <div class="col-sm-10 col-sm-offset-1">
+                    <div class="widget-box transparent invoice-box">
+                        <div class="widget-body">
+                            <div class="widget-main padding-24">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="col-xs-11 label label-lg widget-header-flat arrowed-in arrowed-right">
+                                                <b>年龄段</b>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <ul class="list-unstyled spaced">
+                                                <li>
+                                                    <i class="icon-caret-right" style="color: #68BC31"></i>
+                                                    20以下
+                                                </li>
+
+                                                <li>
+                                                    <i class="icon-caret-right" style="color: #2091CF"></i>
+                                                    20~29
+                                                </li>
+
+                                                <li>
+                                                    <i class="icon-caret-right" style="color:#AF4E96"></i>
+                                                    30~39
+                                                </li>
+
+                                                <li>
+                                                    <i class="icon-caret-right" style="color:#DA5430"></i>
+                                                    40以上
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div><!-- /span -->
+
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="col-xs-11 label label-lg widget-header-flat arrowed-in arrowed-right">
+                                                <b>样本数量</b>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <ul class="list-unstyled  spaced">
+                                                <li>
+                                                    <i class="icon-caret-right" style="color: #68BC31"></i>
+                                                    10
+                                                </li>
+
+                                                <li>
+                                                    <i class="icon-caret-right" style="color: #2091CF"></i>
+                                                    20
+                                                </li>
+
+                                                <li>
+                                                    <i class="icon-caret-right" style="color:#AF4E96"></i>
+                                                    50
+                                                </li>
+
+                                                <li>
+                                                    <i class="icon-caret-right" style="color:#DA5430"></i>
+                                                    20
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div><!-- /span -->
+                                </div><!-- row -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.row -->
+
+                <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+                <div class="col-sm12" >
+                        <div id="main"></div>
+                    </div>
+
+        <!-- /.main-content -->
+    </div><!-- /.main-container-inner -->
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="icon-double-angle-up icon-only bigger-110"></i>
+    </a>
+</div>
+
+</div>
+<!--[if !IE]> -->
+
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+</script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+
+<script type="text/javascript">
+    if("ontouchend" in document) document.write("<script src='js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+</script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/typeahead-bs2.min.js"></script>
+
+<!-- page specific plugin scripts -->
+
+<!--[if lte IE 8]>
+<script src="js/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="js/jquery.ui.touch-punch.min.js"></script>
+<script src="js/jquery.slimscroll.min.js"></script>
+<script src="js/jquery.easy-pie-chart.min.js"></script>
+<script src="js/jquery.sparkline.min.js"></script>
+<script src="js/flot/jquery.flot.min.js"></script>
+<script src="js/flot/jquery.flot.pie.min.js"></script>
+<script src="js/flot/jquery.flot.resize.min.js"></script>
+<!-- ace scripts -->
+
+<script src="js/ace-elements.min.js"></script>
+<script src="js/ace.min.js"></script>
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript" src="http://www.echartsjs.com/dist/echarts.common.min.js"></script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            x: 'left',
+            data:['']
+        },
+        series: [
+            {
+                name:'访问来源',
+                type:'pie',
+                radius: ['50%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data:[
+                    {value:10, name:'20以下'},
+                    {value:20, name:'20~29'},
+                    {value:50, name:'30~39'},
+                    {value:20, name:'40以上'},
+                    // {value:1548, name:'搜索引擎'}
+                ]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+    //通过DOM id获取到echarts实例
+    var myChart = echarts.getInstanceByDom(document.getElementById("main"));
+    window.onresize = function () {
+        myChart.resize();
+    };
+
+</script>
+
+<script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + ""));
+</script>
+</body>
+</html>

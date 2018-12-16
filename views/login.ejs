@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <%= title %>
+    </title>
+    <meta name="viewsport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/public/css/ace.min.css">
+    <link rel="stylesheet" href="/public/css/ace-rtl.min.css">
+    <link rel="stylesheet" href="/public/css/ace-skins.min.css">
+    <script src="/public/js/ace-extra.min.js"></script>
+    <script src="/public/javascripts/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="navbar navbar-default" id="navbar">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('navbar', 'fixed')
+            } catch (e) {}
+        </script>
+
+        <div class="navbar-container" id="navbar-container">
+            <div class="navbar-header pull-left">
+                <a href="#" class="navbar-brand">
+                    <small>
+                        <i class="icon-leaf">
+                            中医妇产科临床流调数据中心
+                        </i>
+                    </small>
+                </a>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+        $("#userLogin").click(function () {
+            $.ajax({
+                url: "/users/login",//路由，用来处理ajax请求的函数的所在地址
+                type: "POST",
+                data: {
+                    email: $("#id_email").val(),    //    用户邮箱和密码
+                    pass: $("#id_password").val()
+                },
+                success: function (data) {
+                    if (data.status == 1) {
+                        window.location.href = '/home';    //    请求成功后跳转到你的主页
+                    } else {
+                        alert(data.msg);
+                    }
+
+                },
+                error: function () {
+                    alert("登录失败");
+                    window.location.href = '/';
+                }
+            });
+        });
+    });
+</script>
+
+    <h1>登录页面</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th><label for="id_email">电子邮箱:</label></th>
+                <td><input type="text" name="email" maxlength="50" required="" id="id_email"></td>
+            </tr>
+            <tr>
+                <th><label for="id_password">密码:</label></th>
+                <td><input type="password" name="password" required="" id="id_password"></td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="submit" id="userLogin">登录</button>
+
+
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='/public/js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
+
+    <script type="text/javascript">
+        if ("ontouchend" in document) document.write("<script src='/public/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+    <script src="/public/js/bootstrap.min.js"></script>
+    <script src="/public/js/typeahead-bs2.min.js"></script>
+
+    <script src="/public/js/ace-elements.min.js"></script>
+    <script src="/public/js/ace.min.js"></script>
+
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript">
+        var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cscript src='" + _bdhmProtocol + ""));
+    </script>
+
+</body>
+
+</html>
