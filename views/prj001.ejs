@@ -137,17 +137,23 @@
             });
         });
         
-        $(".menstruationBtn").click(function () {
-
+        $(".menstruationBtn").click(function () {//这是详情展示的提交按钮
+            alert($("form-menstruation").serialize());
+            alert($("form-menstruation")["blood_cond"]);//此处拿不到正确的取值
             $.ajax({
-                url: "/prj001/menstruation",
+                url: "/prj001/menstruation_save",
                 type: "PUT",
                 dataType: "json",
                 data: {
                     menstruation_url: $(this).attr("menstruationBtn-url"),
+                    //此处需要将对应form的数据序列化后提交到服务端,这样服务端才能再去请求API接口
+                    //与geninfoBtn的处理类似.
+                    //但是有个问题,前端form部分用的是radio button,而不是下拉菜单,同一个变量会有多个值,这样可能会导致错误
+                    //需要前端更改代码,佳敏将原先下拉列表的还是改回到下拉列表
+                    form_menstruation: $("form-menstruation").serialize()
                 },
                 success:function () {
-                    alert("PUT done")
+                    alert("保存成功")
                 },
                 error: function () {
                     alert("Permission Denied!")
@@ -156,46 +162,52 @@
                     // }
                     // if (results.status == )
                     //403,用户除了自己,对于其它用户只有查看权限,不能修改
-                    alert("PUT wrong")
+                    alert("保存失败")
                 },
             })
 
         });
-        $(".menstruation").click(function () {
+        $(".menstruation").click(function () {//这是数据操作的按钮
             document.getElementById("form-menstruation").reset();
-            //alert($(this).attr("menstruation-url"));
-            $.ajax({
-                url: "/prj001/menstruation",//路由，用来处理ajax请求的函数的所在地址
-                type: "POST",
-                data: {menstruation_url: $(this).attr("menstruation-url")},
-                success: function(result){
-                    console.log("this url:",result["url"]);
-                    if (result !== null) {
-                        $('#menstruationBtn').attr("menstruationBtn-url", result["url"]);
-                        //alert("ajax success: ");
-                        $('#first_time').val(result["first_time"]);
-                        if (result["cyclicity"]== true){
-                            $("input[name='cyclicity'][value='尚规律']").attr("checked",true);
-                        } else {
-                            $("input[name='cyclicity'][value='不规律']").attr("checked",true);
-                        }
-                        $('#normal').val(result["normal"]);
-                        $("input[name='abnormal'][value='"+result["abnormal"]+"']").attr("checked",true);
-                        $("input[name='cyclicity_sum'][value='"+result["cyclicity_sum"]+"']").attr("checked",true);
-                        $("input[name='blood_cond'][value='"+result["blood_cond"]+"']").attr("checked",true);
-                        $("input[name='blood_color'][value='"+result["blood_color"]+"']").attr("checked",true);
-                        $("input[name='blood_quality'][value='"+result["blood_quality"]+"']").attr("checked",true);
-                        $("input[name='blood_block'][value='"+result["blood_block"]+"']").attr("checked",true);
-                        $("input[name='blood_character'][value='"+result["blood_character"]+"']").attr("checked",true);
+            alert($(this).attr("menstruation-url"));
+            //只有当月经情况url不为空的情况,才发起ajax请求,否则,上一步展示空的数据录入表即可
+            if ($(this).attr("menstruation-url") == null) {
+                alert("准备创建新月经情况");
+            }
+            else {
+                $.ajax({
+                    url: "/prj001/menstruation_info",//路由，用来处理ajax请求的函数的所在地址
+                    type: "POST",
+                    data: {menstruation_url: $(this).attr("menstruation-url")},
+                    success: function(result){
+                        console.log("this url:",result["url"]);
+                        if (result !== null) {
+                            $('#menstruationBtn').attr("menstruationBtn-url", result["url"]);
+                            //alert("ajax success: ");
+                            $('#first_time').val(result["first_time"]);
+                            if (result["cyclicity"]== true){
+                                $("input[name='cyclicity'][value='尚规律']").attr("checked",true);
+                            } else {
+                                $("input[name='cyclicity'][value='不规律']").attr("checked",true);
+                            }
+                            $('#normal').val(result["normal"]);
+                            $("input[name='abnormal'][value='"+result["abnormal"]+"']").attr("checked",true);
+                            $("input[name='cyclicity_sum'][value='"+result["cyclicity_sum"]+"']").attr("checked",true);
+                            $("input[name='blood_cond'][value='"+result["blood_cond"]+"']").attr("checked",true);
+                            $("input[name='blood_color'][value='"+result["blood_color"]+"']").attr("checked",true);
+                            $("input[name='blood_quality'][value='"+result["blood_quality"]+"']").attr("checked",true);
+                            $("input[name='blood_block'][value='"+result["blood_block"]+"']").attr("checked",true);
+                            $("input[name='blood_character'][value='"+result["blood_character"]+"']").attr("checked",true);
 
-                    }else {
-                        alert("result.status wrong");
+                        }else {
+                            alert("result.status wrong");
+                        }
+                    },
+                    error: function () {
+                        alert("Permission Denied!");
                     }
-                },
-                error: function () {
-                    alert("Permission Denied!");
-                }
-            });
+                });
+            }
         });
 
         $(".symptomBtn").click(function () {
